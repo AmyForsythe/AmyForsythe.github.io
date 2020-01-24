@@ -192,9 +192,8 @@ MData&lt;-mutate(MData,Group=sample(c(&quot;Salt.Water&quot;,&quot;Fresh.Water&q
 <div id="calculate-summary-statistics-by-group" class="section level3">
 <h3>Calculate Summary Statistics by Group</h3>
 <p>We calculate the mean and standard deviation of limb width, limb length and limb volume for each of our groups (salt water and fresh water). The means and standard deviations are calculated for each group using the group_by function to separate our species by the group (salt or fresh water) that they belong to. These values are placed into a table, using the summarize function in dplyr to ensure one row per group (one row for means and standard deviations of fresh water species, and one row for those of salt water species). The kable function from the knitr package is used to make our final table more presentable in the report. The padding argument is used to increase the space between columns in our final knit document.</p>
-<pre class="r"><code>kable(summarize(group_by(MData,Group),Mean.Width=mean(Width.All.cm),SD.Width=sd(Width.All.cm),Mean.Length=mean(Length.All.cm),SD.Length=sd(Length.All.cm),Mean.Volume=mean(Volume),SD.Volume=sd(Volume)),caption=&quot;Table 1: Table of summary statistics.&quot;,padding=10L)</code></pre>
+<pre class="r"><code>kable(summarize(group_by(MData,Group),Mean.Width=mean(Width.All.cm),SD.Width=sd(Width.All.cm),Mean.Length=mean(Length.All.cm),SD.Length=sd(Length.All.cm),Mean.Volume=mean(Volume),SD.Volume=sd(Volume)),caption=&quot;Table 1: Table of summary statistics.&quot;,format=&quot;markdown&quot;,padding=10L)</code></pre>
 <table>
-<caption>Table 1: Table of summary statistics.</caption>
 <thead>
 <tr class="header">
 <th align="left">Group</th>
