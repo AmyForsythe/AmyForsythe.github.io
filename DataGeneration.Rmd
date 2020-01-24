@@ -1,0 +1,46 @@
+---
+title: "DataGeneration.R"
+output: html_document
+---
+
+```{r DataGeneration.R}
+
+#Generate character vector of 10 species
+Species<-c("Ambigua","Galeata","Jollyi","Longispina","Magna","Parvula","Pulex","Pulicaria","Spinulata","Vetulus")
+
+#Generate limb width vector from 10 random draws under a normal distribution with mean of 10 and standard deviation 10
+Limb.Width<-rnorm(10,10,10)
+
+#Function to change any negative limb width values to positive
+Posfunction.Width<-function(i){
+  if(Limb.Width[i]<0){
+    return(Limb.Width[i]*-1)}
+  else{return(Limb.Width[i])}}
+
+#Apply function over limb width vector
+Limb.Width<-sapply(1:length(Limb.Width),Posfunction.Width)
+
+#Randomly draw units (mm or cm) for width, each with 0.5 probability
+unitsW<-sample(c("mm","cm"),size=10,replace=TRUE,prob=c(0.5,0.5))
+
+#Generate limb length vector from 10 random draws under a normal distribution with mean of 100 and standard deviation 100
+Limb.Length<-rnorm(10,100,100)
+
+#Function to change any negative limb length values to positive
+Posfunction.Length<-function(i){
+  if(Limb.Length[i]<0){
+    return(Limb.Length[i]*-1)}
+  else{return(Limb.Length[i])}}
+
+#Apply function over limb length vector
+Limb.Length<-sapply(1:length(Limb.Length),Posfunction.Length)
+
+#Randomly draw units (mm or cm) for length, each with 0.5 probability
+unitsL<-sample(c("mm","cm"),size=10,replace=TRUE,prob=c(0.5,0.5))
+
+#Combine vectors into a dataframe
+MyData<-data.frame(Organism=Species,Limb.Width=Limb.Width,unitsW=unitsW,Limb.Length=Limb.Length,unitsL=unitsL)
+
+#Save dataframe as a .csv in Data folder of our R project
+write.csv(MyData,file="Data/measurements.csv")
+```
