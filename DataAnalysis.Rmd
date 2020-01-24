@@ -6,7 +6,7 @@ output: html_document
 
 ##Load Packages and Data
 
-  The first step to our analysis is loading the required packages (dplyr, ggplot2, knitr) and the data. There will be some warnings when loading the R packages, as we are using an older version of R. We call the R object storing our data "MData". The first column of the .csv gives the row numbers (1 through 10) and as such is not needed. Thus, we take all columns except the first from our .csv that contains the data, and load them to the object Mdata.
+  The first step to our analysis is loading the required packages (dplyr, ggplot2, knitr) and the data. There will be some warnings when loading the R packages, as we are using an older version of R. We call the R object storing our data "MData". The first column of the .csv containing our data gives the row numbers (1 through 10) and as such is not needed. Thus, we take all columns except the first from our .csv, and load them to the object Mdata.
 
 ```{r Load Packages and Data}
 
@@ -43,7 +43,7 @@ MData<-rename(MData,Org=Organism,Lwd=Limb.Width,Uwd=unitsW,Lln=Limb.Length,Uln=u
 
 ###Calculate Volume
 
-  The first step to calculating limb volume for each species is to ensure that all of our measurements are in the same units. Here, we will use centimeters as our unit of measure. All measurements in millimeters must be divided by 10, to convert to centimeters. This conversion is completed using the functions widthtocm and lengthtocm for limb width and limb length, respectively. We add a column to our dataframe with measurements in centimeters for both limb width and limb length, using the mutate function from dplyr. Remark that the units for volume are cm^3.
+  The first step to calculating limb volume for each species is to ensure that all of our measurements are in the same units. Here, we will use centimeters as our unit of measure. All measurements in millimeters must be divided by 10, to convert to centimeters. This conversion is completed using the functions widthtocm and lengthtocm for limb width and limb length, respectively. We add a column to our dataframe with measurements in centimeters for both limb width and limb length, using the mutate function from dplyr. Remark that the units for volume are $cm^3$.
 
   Once all of the measurements are in centimeters, we obtain our limb volume using the formula $V=\pi*r^2*h$, where $r$ is radius and $h$ is height. Remark that this is the formula for the volume of a cylinder, which we have selected to calculate limb volumes as we assume that the shape of limbs are approximately cylindrical. We take limb width to be the diameter (two times the radius) of the limb, and limb length to be the height in our volume formula. We add this limb volume as a column titled "Volume" in our dataframe using the mutate function from dplyr. 
 
@@ -76,10 +76,10 @@ MData<-mutate(MData,Group=sample(c("Salt.Water","Fresh.Water"),size=10,replace=T
 
 ###Calculate Summary Statistics by Group
 
-  We calculate the mean and standard deviation of limb width, limb length and limb volume for each of our groups (salt water and fresh water). The means and standard deviations are calculated for each group using the group_by function to separate our species by the group (salt or fresh water) that they belong to. These values are placed into a table, using the summarize function in dplyr to ensure one row per group (one row for means and standard deviations of fresh water species, and one row for those of salt water species). The kable function from the knitr package is used to make our final table more presentable in the report.
+  We calculate the mean and standard deviation of limb width, limb length and limb volume for each of our groups (salt water and fresh water). The means and standard deviations are calculated for each group using the group_by function to separate our species by the group (salt or fresh water) that they belong to. These values are placed into a table, using the summarize function in dplyr to ensure one row per group (one row for means and standard deviations of fresh water species, and one row for those of salt water species). The kable function from the knitr package is used to make our final table more presentable in the report. The padding argument is used to increase the space between columns in our final knit document.
 
 ```{r Calculate Summary Statistics by Group}
-kable(summarize(group_by(MData,Group),Mean.Width=mean(Width.All.cm),SD.Width=sd(Width.All.cm),Mean.Length=mean(Length.All.cm),SD.Length=sd(Length.All.cm),Mean.Volume=mean(Volume),SD.Volume=sd(Volume)), caption="Table 1: Table of summary statistics.")
+kable(summarize(group_by(MData,Group),Mean.Width=mean(Width.All.cm),SD.Width=sd(Width.All.cm),Mean.Length=mean(Length.All.cm),SD.Length=sd(Length.All.cm),Mean.Volume=mean(Volume),SD.Volume=sd(Volume)),caption="Table 1: Table of summary statistics.",padding=10L)
 ```
 
 ###Plot Limb Width (y) Against Length (x)
