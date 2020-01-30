@@ -1,0 +1,35 @@
+---
+title: "Regex"
+output: html_document
+---
+
+#**BIOL 812 Assignment 3**
+
+##Load Packages and Data
+
+We require the dplyr package and our data from last week.
+```{r Packages and Data}
+library(dplyr)
+MData<-read.csv("Data/measurements.csv")[,-1]
+
+```
+
+##Add "Sp" Column
+
+To create the "Sp" column, we use the sub() regex. We tell sub() to replace everything in the first alphanumeric character of each string in the "Organism" column of our dataframe, except the first letter, with a period. Thus, the "Sp" column contains the first letter of the first name of each species, followed by a period, then any other names. Since we only specified one name for our species, our particular "Sp" column contains only letters followed by periods. We use the mutate() function from the dplyr package to add the "Sp" column to our dataframe.
+
+```{r New Column}
+MData<-mutate(MData,Sp=sub("(\\w)(\\w+)","\\1\\.",Organism))
+MData #Show output
+
+```
+
+##New Data Frame with "Sp" Column in Place of "Organism" Column
+
+We use the select() function from the dplyr package to place the "Sp" column at the beginning of a new dataframe (MData1), followed by everything in MData except the "Organism" column that "Sp" replaced.
+
+```{r Rearrange Columns}
+MData1<-select(MData,Sp,everything(),-Organism)
+MData1 #Show output
+
+```
